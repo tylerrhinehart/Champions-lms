@@ -1,27 +1,27 @@
-let Boards = require('../models/board')
+let Courses = require('../models/course')
 let Lists = require('../models/list')
 
 
 module.exports = {
-  specificBoard: {
-    path: '/boards/:boardId',
+  specificCourse: {
+    path: '/courses/:courseId',
     reqType: 'get',
     method(req, res, next) {
-      let action = 'Find board by BoardID'
-      Boards.findById(req.params.boardId)
-        .then(board => {
-          res.send(handleResponse(action, board))
+      let action = 'Find course by CourseID'
+      Courses.findById(req.params.courseId)
+        .then(course => {
+          res.send(handleResponse(action, course))
         }).catch(error => {
           return next(handleResponse(action, null, error))
         })
     }
   },
-  listsOnBoards: {
-    path: '/boards/:boardId/lists',
+  listsOncourses: {
+    path: '/courses/:courseId/lists',
     reqType: 'get',
     method(req, res, next) {
-      let action = 'Find Lists by BoardID'
-      Lists.find({ boardId: req.params.boardId })
+      let action = 'Find Lists by courseID'
+      Lists.find({ courseId: req.params.courseId })
         .then(lists => {
           res.send(handleResponse(action, lists))
         }).catch(error => {
@@ -29,11 +29,11 @@ module.exports = {
         })
     }
   },
-  boardList: {
-    path: '/boards/:boardId/lists',
+  courseList: {
+    path: '/courses/:courseId/lists',
     reqType: 'post',
     method(req, res, next) {
-      let action = 'Create List On Board'
+      let action = 'Create List On course'
       Lists.create(req.body)
         .then(list => {
           res.send(handleResponse(action, list))
@@ -42,38 +42,38 @@ module.exports = {
         })
     }
   },
-  userBoards: {
-    path: '/userboards',
+  usercourses: {
+    path: '/usercourses',
     reqType: 'post',
     method(req, res, next) {
-      let action = 'Create User Board'
-      Boards.create(req.body)
-        .then(board => {
-          res.send(handleResponse(action, board))
+      let action = 'Create User course'
+      courses.create(req.body)
+        .then(course => {
+          res.send(handleResponse(action, course))
         }).catch(error => {
           return next(handleResponse(action, null, error))
         })
     }
   },
-  board: {
-    path: '/userboards/:boardId',
+  course: {
+    path: '/usercourses/:courseId',
     reqType: 'get',
     method(req, res, next) {
-      let action = 'Find Board'
-      Boards.findbyId(req.params.boardId)
-        .then(board => {
-          res.send(handleResponse(action, board))
+      let action = 'Find course'
+      Courses.findbyId(req.params.courseId)
+        .then(course => {
+          res.send(handleResponse(action, course))
         }).catch(error => {
           return next(handleResponse(action, null, error))
         })
     }
   },
   lists: {
-    path: '/userboards/:boardId/lists',
+    path: '/usercourses/:courseId/lists',
     reqType: 'get',
     method(req, res, next) {
-      let action = 'Find Board Lists'
-      Lists.find({ boardId: req.params.boardId })
+      let action = 'Find course Lists'
+      Lists.find({ courseId: req.params.courseId })
         .then(lists => {
           res.send(handleResponse(action, lists))
         }).catch(error => {
@@ -82,7 +82,7 @@ module.exports = {
     }
   },
   list: {
-    path: '/userboards/:boardId/lists/:listId',
+    path: '/usercourses/:courseId/lists/:listId',
     reqType: 'get',
     method(req, res, next) {
       let action = 'Find List'
@@ -95,7 +95,7 @@ module.exports = {
     }
   },
   tasks: {
-    path: '/userboards/:boardId/lists/:listId/tasks',
+    path: '/usercourses/:courseId/lists/:listId/tasks',
     reqType: 'get',
     method(req, res, next) {
       let action = 'Find List Tasks'
@@ -108,7 +108,7 @@ module.exports = {
     }
   },
   task: {
-    path: '/userboards/:boardId/lists/:listId/tasks/:taskId',
+    path: '/usercourses/:courseId/lists/:listId/tasks/:taskId',
     reqType: 'get',
     method(req, res, next) {
       let action = 'Find Task'
@@ -121,7 +121,7 @@ module.exports = {
     }
   },
   comments: {
-    path: '/userboards/:boardId/lists/:listId/tasks/:taskId/comments',
+    path: '/usercourses/:courseId/lists/:listId/tasks/:taskId/comments',
     reqType: 'get',
     method(req, res, next) {
       let action = 'Find Task Comments'
@@ -134,7 +134,7 @@ module.exports = {
     }
   },
   comment: {
-    path: '/userboards/:boardId/lists/:listId/tasks/:taskId/comments/:commentId',
+    path: '/usercourses/:courseId/lists/:listId/tasks/:taskId/comments/:commentId',
     reqType: 'get',
     method(req, res, next) {
       let action = 'Find Comments'
@@ -146,13 +146,13 @@ module.exports = {
         })
     }
   },
-  sharedBoards: {
-    path: '/sharedBoards',
+  sharedcourses: {
+    path: '/sharedcourses',
     reqType: 'get',
     method(req, res, next) {
-      Boards.find({ collaborators: { $in: req.session.uid } })
-        .then(boards => {
-          res.send(handleResponse(action, boards))
+      Courses.find({ collaborators: { $in: req.session.uid } })
+        .then(courses => {
+          res.send(handleResponse(action, courses))
         }).catch(error => {
           return next(handleResponse(action, null, error))
         })

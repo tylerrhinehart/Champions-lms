@@ -3,14 +3,20 @@
     <v-layout row wrap>
       <v-flex xs12>
         <v-card dark class="primary">
-          <v-card-text class="px-0">Top Keeps</v-card-text>
+          <v-card-text>
+            <h3>Welcome</h3>
+          </v-card-text>
+          <v-card-text>
+            <p>This is the experimental learning management system for Champions College.</p>
+            <p>Please login or register to acces our courses.</p>
+          </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs4 v-for="keep in keeps">
+      <!-- <v-flex xs4 v-for="keep in keeps">
         <Keep :keep="keep"></Keep>
-      </v-flex>
+      </v-flex> -->
     </v-layout>
-    <v-btn id="add-keep" primary fab fixed bottom right v-model="fab" @click="dialog = true">
+    <!-- <v-btn id="add-keep" primary fab fixed bottom right v-model="fab" @click="dialog = true">
       <v-icon>add</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" persistent width="50%">
@@ -28,7 +34,6 @@
                 <v-text-field label="Description" v-model="description"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <!-- <v-text-field type="file" v-model="imgUrl" accept="image/*"></v-text-field> -->
                 <v-btn @click.prevent="openCloud">Upload</v-btn>
               </v-flex>
               <v-switch label="Private" v-model="private"></v-switch>
@@ -42,7 +47,7 @@
           <v-btn class="blue--text darken-1" flat @click="createKeep">Create</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-container>
 </template>
 

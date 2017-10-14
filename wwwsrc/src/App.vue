@@ -13,10 +13,10 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed>
-      <v-toolbar-title v-text="title" @click="home"></v-toolbar-title>
+      <v-toolbar-title v-text="title" @click="dashboard"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn v-show="!loggedIn" @click="form('Login')">Login</v-btn>
-      <v-btn v-show="!loggedIn" @click="form('Sign Up')">Sign Up</v-btn>
+      <v-btn v-show="!loggedIn" @click="form('Register')">Register</v-btn>
       <v-btn v-show="loggedIn" icon @click.stop="drawer = !drawer">
         <v-icon>menu</v-icon>
       </v-btn>
@@ -26,7 +26,6 @@
     </main>
     <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent width="50%">
-        <!-- <v-btn primary dark slot="activator">Open Dialog</v-btn> -->
         <v-card>
           <v-card-title>
             <span class="headline">{{authType}}</span>
@@ -34,33 +33,33 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex v-show="authType == 'Sign Up'" xs12 sm6 md6>
+                <v-flex v-show="authType == 'Register'" xs12 sm6 md6>
                   <v-text-field label="Legal first name" required v-model="formInput.firstName"></v-text-field>
                 </v-flex>
                 <!-- <v-flex xs12 sm6 md4>
                   <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
                 </v-flex> -->
-                <v-flex v-show="authType == 'Sign Up'" xs12 sm6 md6>
+                <v-flex v-show="authType == 'Register'" xs12 sm6 md6>
                   <v-text-field label="Legal last name" required v-model="formInput.lastName"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                   <v-text-field label="Email" required v-model="formInput.email"></v-text-field>
                 </v-flex>
-                <v-flex v-show="authType == 'Sign Up'" xs12>
+                <v-flex v-show="authType == 'Register'" xs12>
                   <v-text-field label="Username" required v-model="formInput.username"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                   <v-text-field label="Password" type="password" required v-model="formInput.password"></v-text-field>
                 </v-flex>
-                <v-flex v-show="authType == 'Sign Up'" xs12>
+                <v-flex v-show="authType == 'Register'" xs12>
                   <v-text-field label="Confirm Password" type="password" required v-model="formInput.confirmPassword"></v-text-field>
                 </v-flex>
                 <!-- <v-flex xs12 sm6>
                   <v-select label="Age" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
                 </v-flex> -->
-                <!-- <v-flex xs12 sm6>
-                  <v-select label="Interests" multiple autocomplete chips :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"></v-select>
-                </v-flex> -->
+                <v-flex xs12 sm6 v-show="authType == 'Register'">
+                  <v-select v-model="type" required label="Who Are You" :items="['Student', 'Teacher', 'Admin', 'Parent']"></v-select>
+                </v-flex>
               </v-layout>
             </v-container>
             <small>*indicates required field</small>
@@ -74,7 +73,7 @@
       </v-dialog>
     </v-layout>
     <v-footer id="footer" :fixed="fixed">
-      <span>Keepr &copy; 2017</span>
+      <span>Champions College &copy; 2017</span>
     </v-footer>
     <BottomVaultsBar></BottomVaultsBar>
   </v-app>
@@ -91,17 +90,18 @@
         drawer: false,
         fixed: true,
         items: [
-          { icon: 'home', title: 'Home', function: this.home },
+          { icon: 'home', title: 'Dashboard', function: this.dashboard },
           { icon: 'account_circle', title: 'My Account', function: this.account },
-          { icon: 'web', title: 'My Vaults', function: this.myVaults },
+          { icon: 'web', title: 'My Courses', function: this.myVaults },
           { icon: 'remove_circle', title: 'Logout', function: this.logout }
         ],
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Keepr',
+        title: 'Champions Learning Center',
         dialog: false,
         authType: '',
+        type: '',
         formInput: {
           firstName: '',
           lastName: '',
@@ -113,8 +113,8 @@
       }
     },
     methods: {
-      home() {
-        router.push("/")
+      dashboard() {
+        router.push("/dashboard")
         this.drawer = false
       },
       account() {
@@ -136,6 +136,7 @@
         this.formInput.password = ''
         this.formInput.confirmPassword = ''
         this.formInput.email = ''
+        this.type = ''
       },
       handleForm() {
         if (this.authType == 'Login') {
@@ -161,13 +162,15 @@
           name: this.formInput.firstName + ' ' + this.formInput.lastName,
           username: this.formInput.username,
           password: this.formInput.password,
-          email: this.formInput.email
+          email: this.formInput.email,
+          type: this.type
         }
         this.$store.dispatch('signup', signupForm)
         this.closeDialog()
       },
       myVaults() {
         router.push('/vaults')
+        this.drawer = false
       }
     },
     computed: {

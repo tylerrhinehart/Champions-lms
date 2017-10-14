@@ -102,6 +102,7 @@ var store = new vuex.Store({
     login({ commit, dispatch }, payload) {
       auth.post('login', payload).then((res) => {
         commit('login', res.data.data)
+        router.push('/dashboard')
       })
         .then(() => {
           dispatch('getUserVaults')
@@ -111,6 +112,7 @@ var store = new vuex.Store({
     signup({ commit, dispatch }, payload) {
       auth.post('register', payload).then((res) => {
         commit('login', res.data.data)
+        router.push('/dashboard')
         dispatch('defaultVault')
       })
         .catch((err) => console.error(err))
@@ -127,6 +129,7 @@ var store = new vuex.Store({
           return router.push('/')
         }
         commit('login', res.data.data)
+        router.push('/dashboard')
       })
         .then(() => {
           dispatch('getUserVaults')

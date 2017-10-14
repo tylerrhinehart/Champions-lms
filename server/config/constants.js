@@ -7,9 +7,9 @@ const actions = {
 }
 
 const models = {
-  board: {
-    name: 'Board',
-    endpoint: 'boards',
+  course: {
+    name: 'Course',
+    endpoint: 'courses',
     preventDefaultApi: true,
     useCustomRoutes: true
   },

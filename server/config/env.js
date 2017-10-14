@@ -5,8 +5,8 @@ let env = {
 	DBPROTOCOL: 'mongodb',
 	DBUSERNAME: 'admin',
 	DBPASSWORD: 'admin',
-	DBHOST: 'ds161194.mlab.com:61194',
-	DBNAME: 'keepr-nodejs',
+	DBHOST: 'ds121015.mlab.com:21015',
+	DBNAME: 'champions-lms',
 	SERVERNAME: 'dev-server'
 }
 

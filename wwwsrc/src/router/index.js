@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import UserVaults from '@/components/UserVaults'
 import Vault from '@/components/Vault'
 import Keep from '@/components/Keep'
+import Dashboard from '@/components/Dashboard'
 import SingleKeepView from '@/components/SingleKeepView'
 import SingleVaultView from '@/components/SingleVaultView'
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/vaults',
